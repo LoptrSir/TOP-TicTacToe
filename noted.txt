@@ -1,0 +1,3 @@
+Notes for synched saves.
+
+10/10/23 1622: have a mostly functional game. declares a winner but allows continued play until the almighty TACOCAT wins.
