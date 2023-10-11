@@ -1,5 +1,6 @@
 Notes for synched saves.
 
-10/11/23 1224 Repo Push: tiles listener disabled upon win.
+10/11/23 1426 Reset and PlayAgain function.
+1224 Repo Push: tiles listener disabled upon win.
 1213: Repo Push: game declares winner or cat, Need to disable eventListeners after player win as it can continue to a cat win currently.
 10/10/23 1622: have a mostly functional game. declares a winner but allows continued play until the almighty TACOCAT wins.
