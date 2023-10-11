@@ -91,6 +91,7 @@ const displayText = (() => {
       currentPlayer.score++;
       victory.style.display = "block";
       round.textContent = `This round goes to ${currentPlayer.name} playing ${currentPlayer.mark}.`;
+      //add remove listener here
     }
       p1Win.textContent = `${player1.name}'s score is ${player1.score}.`;
       p2Win.textContent = `${player2.name}'s  score is ${player2.score}.`;
@@ -194,6 +195,11 @@ const checkWin = (currentPlayer) => {
       )
     ))
   ) {
+    tiles.forEach((tile) => {
+        if (!tile.textContent && !playedTiles.includes(tile)) {
+          tile.removeEventListener("click", handlePlayerMove);
+        }
+      });
     console.log("checkWin:", currentPlayer.mark, "wins");
     displayText.displayWin(currentPlayer);
   }
