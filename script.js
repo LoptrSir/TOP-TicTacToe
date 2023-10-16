@@ -1,5 +1,5 @@
 //TTT the phoenix version from the ashes of spaghetti.
-// move tile listener into function and call at PlayGame. disable 'this round goes to' upon playAgain, reset: remove player names from input field and deselect x/o,
+// disable tiles until playGame clicked by moving tile listener into function and call at PlayGame? disable 'this round goes to' upon playAgain, reset: remove player names from input field and deselect x/o,
 
 //playerFactory
 const playerFactory = function (name, mark) {
@@ -20,13 +20,14 @@ const tiles = document.querySelectorAll(".tile");
 let playedTiles = [];
 let gameWon;
 const victory = document.getElementById("victory"); //Makes win statement visible
+const score = document.getElementById("score");
 const round = document.getElementById("round"); //Declares winner
 let p1Win = document.getElementById("p1win"); //DisplayScores
 let p2Win = document.getElementById("p2win"); //DisplayScores
 let catWin = document.getElementById("catwin"); //DisplayScores
 let catScore = 0;
-let reset = document.getElementById('reset');
-let playAgain = document.getElementById('playAgain');
+let reset = document.getElementById("reset");
+let playAgain = document.getElementById("playAgain");
 
 const winningConditions = [
   ["b1", "b2", "b3"],
@@ -53,18 +54,19 @@ const displayText = (() => {
         : player1.mark === "X"
         ? "O"
         : "X";
-    p1.textContent = `Player one: ${player1.name} is playing ${player1.mark} `;
-    p2.textContent = `Player two: ${player2.name} is playing ${player2.mark}`;
-
+    p1.textContent = `${player1.name} is playing ${player1.mark}     ${player2.name} is playing ${player2.mark}`;
+    p1.style.whiteSpace = "pre";
     playGameBtn.disabled = true;
-
-        document.querySelector('#player1 input[name="name"]').disabled = true;
-        const player1ChoiceInputs = document.querySelectorAll('#player1 input[name="choice"]');
-        player1ChoiceInputs.forEach(input => input.disabled = true);
-        document.querySelector('#player2 input[name="name"]').disabled = true;
-        const player2ChoiceInputs = document.querySelectorAll('#player2 input[name="choice"]');
-        player2ChoiceInputs.forEach(input => input.disabled = true);
-
+    document.querySelector('#player1 input[name="name"]').disabled = true;
+    const player1ChoiceInputs = document.querySelectorAll(
+      '#player1 input[name="choice"]'
+    );
+    player1ChoiceInputs.forEach((input) => (input.disabled = true));
+    document.querySelector('#player2 input[name="name"]').disabled = true;
+    const player2ChoiceInputs = document.querySelectorAll(
+      '#player2 input[name="choice"]'
+    );
+    player2ChoiceInputs.forEach((input) => (input.disabled = true));
     console.log(
       "displayNames:",
       player1.name,
@@ -75,20 +77,20 @@ const displayText = (() => {
   };
 
   function displayWin(winner) {
+    victory.style.display = "block";
+    score.style.display = "block";
     if (winner === cat) {
       catScore++;
-      victory.style.display = "block";
-      round.textContent = "This round goes to the TACOCAT.";
+      round.textContent = "This round goes to the TACOCAT";
       console.log("displayWin: TACOCAT");
     } else {
       currentPlayer.score++;
-      victory.style.display = "block";
-      round.textContent = `This round goes to ${currentPlayer.name}.`;
+      round.textContent = `This round goes to ${currentPlayer.name}`;
       //add remove listener here
     }
-    p1Win.textContent = `${player1.name}'s score is ${player1.score}.`;
-    p2Win.textContent = `${player2.name}'s  score is ${player2.score}.`;
-    catWin.textContent = `TACOCAT's score is ${catScore}.`;
+    p1Win.textContent = `${player1.name}: ${player1.score}`;
+    p2Win.textContent = `${player2.name}: ${player2.score}`;
+    catWin.textContent = `TACOCAT's: ${catScore}`;
   }
 
   return { displayNames, displayWin };
@@ -120,59 +122,69 @@ const gameLogic = (() => {
   };
 
   const checkWin = (currentPlayer) => {
-    if (gameWon = winningConditions.some((combination) =>
-          combination.every((i) =>
-            playedTiles.some(
-              (tile) => tile.tile === i && tile.marker === currentPlayer.mark
-            )
+    if (
+      (gameWon = winningConditions.some((combination) =>
+        combination.every((i) =>
+          playedTiles.some(
+            (tile) => tile.tile === i && tile.marker === currentPlayer.mark
           )
-        ))
-       {
-        tiles.forEach((tile) => {
-          if (!tile.textContent && !playedTiles.includes(tile)) {
-            tile.removeEventListener("click", handlePlayerMove);
-          }
-        });
-        console.log("checkWin:", currentPlayer.mark, "wins");
-        displayText.displayWin(currentPlayer);
-      } else if (playedTiles.length === 9) {
-        console.log("checkWin is a Tie");
-        displayText.displayWin(cat);
-  };
-}
-
-  const playAgain = () => { //Vet the code below
-    playedTiles = [];
-    //playGameBtn.disabled = false;
-    document.querySelector('#player1 input[name="name"]').disabled = false;
-    const player1ChoiceInputs = document.querySelectorAll('#player1 input[name="choice"]');
-    player1ChoiceInputs.forEach(input => input.disabled = false);
-    document.querySelector('#player2 input[name="name"]').disabled = false;
-    const player2ChoiceInputs = document.querySelectorAll('#player2 input[name="choice"]');
-    player2ChoiceInputs.forEach(input => input.disabled = false);
-    tiles.forEach(tile => {
-        tile.textContent = ''; // Clear the tile text if necessary
-        tile.addEventListener('click', handlePlayerMove);
+        )
+      ))
+    ) {
+      tiles.forEach((tile) => {
+        if (!tile.textContent && !playedTiles.includes(tile)) {
+          tile.removeEventListener("click", handlePlayerMove);
+        }
       });
+      console.log("checkWin:", currentPlayer.mark, "wins");
+      displayText.displayWin(currentPlayer);
+    } else if (playedTiles.length === 9) {
+      console.log("checkWin is a Tie");
+      displayText.displayWin(cat);
+    }
   };
 
-  const reset = () => { //Vet the code below
+  const playAgain = () => {
+    //Vet the code below
+    victory.style.display = "none";
+    playedTiles = [];
+    tiles.forEach((tile) => {
+      tile.textContent = ""; // Clear the tile text if necessary
+      tile.addEventListener("click", handlePlayerMove);
+    });
+  };
 
+  const reset = () => {
+    //Vet the code below
+    playAgain();
+    p1.textContent = "";
     playGameBtn.disabled = false;
-    document.querySelector('#player1 input[name="name"]').disabled = false;
-    const player1ChoiceInputs = document.querySelectorAll('#player1 input[name="choice"]');
-    player1ChoiceInputs.forEach(input => input.disabled = false);
-    document.querySelector('#player2 input[name="name"]').disabled = false;
-    const player2ChoiceInputs = document.querySelectorAll('#player2 input[name="choice"]');
-    player2ChoiceInputs.forEach(input => input.disabled = false);
-    tiles.forEach(tile => {
-        tile.textContent = ''; // Clear the tile text if necessary
-        tile.addEventListener('click', handlePlayerMove);
-});
     player1.score = 0;
     player2.score = 0;
     catScore = 0;
     victory.style.display = "none";
+    //clears player names and marker selection, but cannot enter new player or marker
+    document.querySelector('#player1 input[name="name"]').disabled = false;
+    const player1ChoiceInputs = document.querySelectorAll(
+      '#player1 input[name="choice"]'
+    );
+    player1ChoiceInputs.forEach((input) => {
+      input.disabled = false;
+      input.checked = false;
+    });
+    document.querySelector('#player2 input[name="name"]').disabled = false;
+    const player2ChoiceInputs = document.querySelectorAll(
+      '#player2 input[name="choice"]'
+    );
+    player2ChoiceInputs.forEach((input) => (input.disabled = false));
+
+    document.querySelector('#player1 input[name="name"]').value = "";
+    document.querySelector('#player2 input[name="name"]').value = "";
+    // const player1ChoiceInputs = document.querySelectorAll('#player1 input[name="choice"]');
+    // player1ChoiceInputs.forEach((input) => {
+    //   input.disabled = false;
+    // //   input.checked = false;
+    // });
   };
   return { checkWin, handlePlayerMove, reset, playAgain };
 })();
@@ -184,5 +196,5 @@ for (let tile of tiles) {
   tile.addEventListener("click", gameLogic.handlePlayerMove);
 }
 
-reset.addEventListener('click', gameLogic.reset);
-playAgain.addEventListener('click', gameLogic.playAgain);
+reset.addEventListener("click", gameLogic.reset);
+playAgain.addEventListener("click", gameLogic.playAgain);

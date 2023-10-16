@@ -1,5 +1,7 @@
 Notes for synched saves.
 
+10/16/23 1604 found an image but couldnt find any info about copyright. Unable to contact person as this blog was from 2012. will include blog address as a credit in title.
+1500: CSS styling started.
 10/11/23 1426 Reset and PlayAgain function.
 1224 Repo Push: tiles listener disabled upon win.
 1213: Repo Push: game declares winner or cat, Need to disable eventListeners after player win as it can continue to a cat win currently.

@@ -1,17 +1,101 @@
 /*Tic Tac Toe TOP project*/
 
-/* TODO:   
+/* TODO:  embed photo for background 
 */
 
+* {
+  /*CSS reset for the page*/
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  min-height: 80vh;
+  background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  /* overflow-y: scroll;  */
+  min-height: 100vh;
+  place-items: center;
+  justify-content: center;
+  align-content: center;
+  background-image: src='../images/TicTacToeRocks.jpg';
+  /* background-image: url('file:///home/ToP/CourseAssignments/Tic-Tac-Toe-TOP/TicTacToeRocks.jpg'); */
+
+  background-size: cover; /* This will make the image cover the entire body */
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.players, #round, #score {
+    display: flex;
+    flex-direction: column;
+    margin-bottom:  10px;
+    align-items: center;
+  }
+
+#victory {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+/* #playAgain {
+    display: flex;
+    flex-direction: row;
+    margin-bottom:  10px;
+    align-content: center;
+  } */
+
 .board {
-    display: grid;
-    grid-template-rows: repeat(3, 30px);
-    grid-template-columns: repeat(3, 30px);
-    gap: 2px;
+  display: grid;
+  justify-content: center;
+  /* place-items: center; */
+  grid-template-rows: repeat(3, 30px);
+  grid-template-columns: repeat(3, 30px);
+  gap: 2px;
 }
 
 .tile {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(209, 218, 196);
+  width: 100%;
+  height: 100%;
+  background-color: rgb(209, 218, 196);
+}
+
+.playerNames {
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+  margin-top: 25px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  gap: 10px;
+}
+
+.footer {
+  background-color: #333;
+  font-size: 0.6rem;
+  color: #f8afe5; /* Text color */
+  padding: 3px; /* Padding for the footer content */
+  text-align: center;
+  position: fixed; /*stays visible when scrolling*/
+  width: 100%; /*span entire width of viewport */
+  bottom: 0; /* Pin footer to bottom of viewport */
 }
