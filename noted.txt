@@ -1,6 +1,7 @@
 Notes for synched saves.
 
-10/17/23 1221 Repo Push: Cleaning up JS, addEventListener called in displayNames to disable tiles prior to name input.
+10/17/23 1344 Repo Push: background image attached, adjusted font color and button/input opacity. Fixed bug: enter player mark alert not popping up.
+1221 Repo Push: Cleaning up JS, addEventListener called in displayNames to disable tiles prior to name input.
 1033 Repo Push: Winner plays first, tie advances to next player. Score removed upon reset.
 10/16/23 1604 found an image but couldnt find any info about copyright. Unable to contact person as this blog was from 2012. will include blog address as a credit in title.
 1500: CSS styling started.

@@ -1,8 +1,5 @@
 /*Tic Tac Toe TOP project*/
 
-/* TODO:  embed photo for background 
-*/
-
 * {
   /*CSS reset for the page*/
   margin: 0;
@@ -11,8 +8,10 @@
 }
 
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: system-ui, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: brown;
+  font-weight: bold;
 }
 
 body {
@@ -20,18 +19,15 @@ body {
   background-color: #fdfdfd;
   display: flex;
   flex-direction: column;
-  /* overflow-y: scroll;  */
   min-height: 100vh;
   place-items: center;
   justify-content: center;
   align-content: center;
-  background-image: src='../images/TicTacToeRocks.jpg';
-  /* background-image: url('file:///home/ToP/CourseAssignments/Tic-Tac-Toe-TOP/TicTacToeRocks.jpg'); */
-
-  background-size: cover; /* This will make the image cover the entire body */
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-
+  background-image: url("TicTacToeRocks.JPG");
+  /* photo credit for tictactoe rocks https://www.blogger.com/profile/16476250795629445219 */
+  background-size: cover; /*covers entire body */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .title {
@@ -40,36 +36,29 @@ body {
   margin-bottom: 50px;
 }
 
-.players, #round, #score {
-    display: flex;
-    flex-direction: column;
-    margin-bottom:  10px;
-    align-items: center;
-  }
+.players,
+#round,
+#score {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-items: center;
+}
 
 #victory {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  color:blue;
+  color: blue;
 }
-
-/* #playAgain {
-    display: flex;
-    flex-direction: row;
-    margin-bottom:  10px;
-    align-content: center;
-  } */
 
 .board {
   display: grid;
   justify-content: center;
-  /* place-items: center; */
   grid-template-rows: repeat(3, 40px);
   grid-template-columns: repeat(3, 40px);
   gap: 2px;
   font-weight: bolder;
-  color:brown;
 }
 
 .tile {
@@ -77,15 +66,21 @@ body {
   height: 100%;
   background-color: rgb(209, 218, 196);
   font-weight: bolder;
-font-size: x-large;
-  color:brown;
+  font-size: x-large;
+  color: brown;
 }
 
 .playerNames {
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
   margin-top: 25px;
+}
+
+input,
+::placeholder {
+  background-color: rgb(245, 245, 220, 0.2);
+  color: brown;
+  font-weight: bold;
 }
 
 .buttons {
@@ -95,13 +90,19 @@ font-size: x-large;
   gap: 10px;
 }
 
+button {
+  background-color: rgb(245, 245, 220, 0.2);
+  color: brown;
+  font-weight: bold;
+}
+
 .footer {
   background-color: #333;
   font-size: 0.6rem;
   color: #f8afe5; /* Text color */
-  padding: 3px; /* Padding for the footer content */
+  padding: 3px; 
   text-align: center;
-  position: fixed; /*stays visible when scrolling*/
-  width: 100%; /*span entire width of viewport */
-  bottom: 0; /* Pin footer to bottom of viewport */
+  position: fixed; 
+  width: 100%; 
+  bottom: 0;
 }

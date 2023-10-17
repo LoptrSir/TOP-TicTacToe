@@ -1,5 +1,4 @@
-//TTT the phoenix version from the ashes of spaghetti.
-// disable tiles until playGame clicked by moving tile listener into function and call at PlayGame?
+//TTT the phoenix version risen from the ashes of spaghetti.
 
 //playerFactory
 const playerFactory = function (name, mark) {
@@ -46,19 +45,21 @@ const winningConditions = [
 
 //Displays Text Module
 const displayText = (() => {
-
   const displayNames = () => {
     player1.name = document.querySelector('#player1 input[name="name"]').value;
     player2.name = document.querySelector('#player2 input[name="name"]').value;
+
+    const player1mark = document.querySelector(
+      '#player1 input[name="choice"]:checked'
+    );
+    if (!player1mark) {
+      alert("Player1 select X or O");
+      return;
+    }
     player1.mark = document.querySelector(
       '#player1 input[name="choice"]:checked'
     ).value;
-    player2.mark =
-      player1.mark === null
-        ? alert("Player 1 select X or O")
-        : player1.mark === "X"
-        ? "O"
-        : "X";
+    player2.mark = player1.mark === "X" ? "O" : "X";
     p1.textContent = `${player1.name} is playing ${player1.mark}     ${player2.name} is playing ${player2.mark}`;
     p1.style.whiteSpace = "pre";
     playGameBtn.disabled = true;
@@ -96,7 +97,6 @@ const displayText = (() => {
 
 //Game Logic Module
 const gameLogic = (() => {
-
   const handlePlayerMove = (event) => {
     tile = event.target; //Does it make sense to declare tile globally?
     console.log("gameLogic. players:", player1, player2);
@@ -192,6 +192,3 @@ function addTileListeners() {
     tile.addEventListener("click", gameLogic.handlePlayerMove);
   }
 }
-
-
-
