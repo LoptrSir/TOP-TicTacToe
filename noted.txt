@@ -1,5 +1,6 @@
 Notes for synched saves.
 
+10/17/23 1033 Repo Push: Winner plays first, tie advances to next player. Score removed upon reset.
 10/16/23 1604 found an image but couldnt find any info about copyright. Unable to contact person as this blog was from 2012. will include blog address as a credit in title.
 1500: CSS styling started.
 10/11/23 1426 Reset and PlayAgain function.

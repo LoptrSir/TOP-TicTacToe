@@ -1,5 +1,5 @@
 //TTT the phoenix version from the ashes of spaghetti.
-// disable tiles until playGame clicked by moving tile listener into function and call at PlayGame? disable 'this round goes to' upon playAgain, reset: remove player names from input field and deselect x/o,
+// disable tiles until playGame clicked by moving tile listener into function and call at PlayGame? disable 'this round goes to' upon playAgain. playAgain winner goes first, cat advances to next player.
 
 //playerFactory
 const playerFactory = function (name, mark) {
@@ -9,9 +9,9 @@ const playerFactory = function (name, mark) {
 //Declare variables
 let player1 = playerFactory("Player 1", "X");
 let player2 = playerFactory("Player 2", "O");
-let p1 = document.getElementById("p1");
-let p2 = document.getElementById("p2");
 let cat; //Tie game winner
+let p1 = document.getElementById("p1");
+// let p2 = document.getElementById("p2");
 const playGameBtn = document.getElementById("playGame");
 let currentPlayer;
 let isPlayer1Turn = true;
@@ -26,6 +26,7 @@ let p1Win = document.getElementById("p1win"); //DisplayScores
 let p2Win = document.getElementById("p2win"); //DisplayScores
 let catWin = document.getElementById("catwin"); //DisplayScores
 let catScore = 0;
+let isTie = false;
 let reset = document.getElementById("reset");
 let playAgain = document.getElementById("playAgain");
 
@@ -80,12 +81,13 @@ const displayText = (() => {
     victory.style.display = "block";
     score.style.display = "block";
     if (winner === cat) {
+      isTie = true;
       catScore++;
       round.textContent = "This round goes to the TACOCAT";
       console.log("displayWin: TACOCAT");
     } else {
       currentPlayer.score++;
-      round.textContent = `This round goes to ${currentPlayer.name}`;
+      round.textContent = `Congratulations ${currentPlayer.name} you have prevailed!`;
       //add remove listener here
     }
     p1Win.textContent = `${player1.name}: ${player1.score}`;
@@ -99,7 +101,7 @@ const displayText = (() => {
 //Game Logic
 const gameLogic = (() => {
   const handlePlayerMove = (event) => {
-    tile = event.target;
+    tile = event.target; //Does it make sense to declare tile globally?
     console.log("gameLogic. players:", player1, player2);
     if (!tile.textContent && !playedTiles.includes(tile)) {
       currentPlayer = isPlayer1Turn ? player1 : player2;
@@ -110,7 +112,7 @@ const gameLogic = (() => {
       console.log("gameLogic.", currentPlayer.mark);
       tile.removeEventListener("click", handlePlayerMove);
       playedTiles.push({ tile: tile.id, marker: currentPlayer.mark });
-      isPlayer1Turn = !isPlayer1Turn;
+      isPlayer1Turn = !isPlayer1Turn; //Changes player
       console.log(
         "updateBoard playedTiles:",
         playedTiles,
@@ -127,14 +129,14 @@ const gameLogic = (() => {
         combination.every((i) =>
           playedTiles.some(
             (tile) => tile.tile === i && tile.marker === currentPlayer.mark
-          )
+          ) //This iteration of tile is strictly related to looping not the global tile, yes?
         )
       ))
     ) {
       tiles.forEach((tile) => {
         if (!tile.textContent && !playedTiles.includes(tile)) {
           tile.removeEventListener("click", handlePlayerMove);
-        }
+        }  
       });
       console.log("checkWin:", currentPlayer.mark, "wins");
       displayText.displayWin(currentPlayer);
@@ -149,21 +151,30 @@ const gameLogic = (() => {
     victory.style.display = "none";
     playedTiles = [];
     tiles.forEach((tile) => {
-      tile.textContent = ""; // Clear the tile text if necessary
+      tile.textContent = ""; // Clears tile text.
       tile.addEventListener("click", handlePlayerMove);
     });
+    if(isTie === false) {
+      isPlayer1Turn =!isPlayer1Turn;
+    }
+    console.log('playAgain isTie:', isTie);
+    isTie = false;
+    console.log('playAgain2 isTie', isTie);
+
   };
 
   const reset = () => {
     //Vet the code below
-    playAgain();
+    playAgain(); //reduces duplication of code, is this preferred?
     p1.textContent = "";
     playGameBtn.disabled = false;
     player1.score = 0;
     player2.score = 0;
     catScore = 0;
-    victory.style.display = "none";
-    //clears player names and marker selection, but cannot enter new player or marker
+    isPlayer1Turn = true;
+    score.style.display = "none";
+    round.textContent = "";
+    // victory.style.display = "none";
     document.querySelector('#player1 input[name="name"]').disabled = false;
     const player1ChoiceInputs = document.querySelectorAll(
       '#player1 input[name="choice"]'
@@ -176,15 +187,10 @@ const gameLogic = (() => {
     const player2ChoiceInputs = document.querySelectorAll(
       '#player2 input[name="choice"]'
     );
-    player2ChoiceInputs.forEach((input) => (input.disabled = false));
+    player2ChoiceInputs.forEach((input) => (input.disabled = false)); //I feel this is redundant as only player 1 has a marker choice, does this clear out the 'O'?
 
     document.querySelector('#player1 input[name="name"]').value = "";
     document.querySelector('#player2 input[name="name"]').value = "";
-    // const player1ChoiceInputs = document.querySelectorAll('#player1 input[name="choice"]');
-    // player1ChoiceInputs.forEach((input) => {
-    //   input.disabled = false;
-    // //   input.checked = false;
-    // });
   };
   return { checkWin, handlePlayerMove, reset, playAgain };
 })();
